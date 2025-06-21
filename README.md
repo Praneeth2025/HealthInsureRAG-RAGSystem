@@ -11,37 +11,37 @@ An AI-powered document-based **Question Answering (QA)** and **Summarization** c
 
 ## 🚀 Features
 
-* 📄 **PDF Parsing with Context Awareness**
+* 📄 **PDF Parsing with Context Awareness**\
   Extracts structured data from PDFs using `pdfplumber` and `PyMuPDF`, retaining formatting like **headings** and **bolded phrases**.
 
-* ✂️ **Chunking with Contextual Embedding**
+* ✂️ **Chunking with Contextual Embedding**\
   Text is split using `RecursiveCharacterTextSplitter` and prefixed with its **parent heading and highlights**, improving semantic understanding.
 
-* 🧠 **Embeddings via SentenceTransformers**
+* 🧠 **Embeddings via SentenceTransformers**\
   Text chunks are embedded using `all-MiniLM-L6-v2` for high-quality semantic similarity matching.
 
-* 📾 **ChromaDB Vector Store**
+* 📾 **ChromaDB Vector Store**\
   Stores vector representations of document chunks persistently using `Chroma`.
 
-* 🔍 **Contextual Compression Retriever**
+* 🔍 **Contextual Compression Retriever**\
   A 2-stage retrieval process using:
 
-  * **Similarity-based retriever**
+  * **Similarity-based retriever**\
   * **LLM compressor** for relevance filtering
 
-* 🧠 **Mistral-7B QA LLM**
+* 🧠 **Mistral-7B QA LLM**\
   Uses `mistralai/Mistral-7B-Instruct-v0.1` to generate accurate, explainable answers based on compressed context.
 
-* 🌐 **Web Search Tool**
+* 🌐 **Web Search Tool**\
   Falls back to DuckDuckGo for external search when the document lacks enough information.
 
-* 💡 **Summary Generation**
+* 💡 **Summary Generation**\
   Users can generate a **document summary** highlighting key coverage points, exclusions, and important clauses using the LLM — helpful for quick overviews.
 
-* 💾 **Disk-Based Caching**
+* 💾 **Disk-Based Caching**\
   Query responses are cached using `diskcache` to improve performance on repeated searches.
 
-* 🖥️ **Streamlit Interface**
+* 🖥️ **Streamlit Interface**\
   A polished web interface built with Streamlit supports PDF uploads, QA, and summary generation in real-time.
 
 ---
