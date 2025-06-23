@@ -2,6 +2,7 @@
 streamlit
 python-dotenv
 diskcache
+numpy==1.24.4
 
 # PDF processing
 PyMuPDF  # provides the 'fitz' module
