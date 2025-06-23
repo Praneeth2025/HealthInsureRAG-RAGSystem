@@ -31,7 +31,7 @@ from langchain.retrievers.contextual_compression import ContextualCompressionRet
 from langchain_core.tools import tool
 from langchain_community.tools.ddg_search.tool import DuckDuckGoSearchRun
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain.agents import AgentExecutor
 
 # --- Caching ---
 from diskcache import Cache
