@@ -194,102 +194,102 @@ def build_vectorstore_from_pdf(file_path):
 
 #CHROMA STORE:
 
-#Upoading Embeddings to Chroma Store
-def upload_to_chroma_cloud(local_dir, collection_name, chroma_host, api_key):
-    """
-    Upload a local Chroma collection to Chroma Cloud.
+# #Upoading Embeddings to Chroma Store
+# def upload_to_chroma_cloud(local_dir, collection_name, chroma_host, api_key):
+#     """
+#     Upload a local Chroma collection to Chroma Cloud.
 
-    Args:
-        local_dir (str): Directory of local Chroma DB (e.g., "chroma_store").
-        collection_name (str): The target collection name on Chroma Cloud.
-        chroma_host (str): URL of the remote Chroma host (e.g., "https://api.trychroma.com").
-        api_key (str): Your Chroma API key.
+#     Args:
+#         local_dir (str): Directory of local Chroma DB (e.g., "chroma_store").
+#         collection_name (str): The target collection name on Chroma Cloud.
+#         chroma_host (str): URL of the remote Chroma host (e.g., "https://api.trychroma.com").
+#         api_key (str): Your Chroma API key.
 
-    Returns:
-        Remote collection handle (Collection)
-    """
-    # Step 1: Load local collection
-    from langchain.vectorstores import Chroma
-    from langchain.embeddings import HuggingFaceEmbeddings
+#     Returns:
+#         Remote collection handle (Collection)
+#     """
+#     # Step 1: Load local collection
+#     from langchain.vectorstores import Chroma
+#     from langchain.embeddings import HuggingFaceEmbeddings
 
-    embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+#     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-    print(f"Loading local Chroma store from {local_dir}...")
-    local_vectorstore = Chroma(
-        persist_directory=local_dir,
-        collection_name=collection_name,
-        embedding_function=embedding_model,
-    )
+#     print(f"Loading local Chroma store from {local_dir}...")
+#     local_vectorstore = Chroma(
+#         persist_directory=local_dir,
+#         collection_name=collection_name,
+#         embedding_function=embedding_model,
+#     )
 
-    local_docs = local_vectorstore.get(include=["documents", "embeddings", "metadatas"])
+#     local_docs = local_vectorstore.get(include=["documents", "embeddings", "metadatas"])
 
-    print(f"Loaded {len(local_docs['documents'])} documents from local store.")
+#     print(f"Loaded {len(local_docs['documents'])} documents from local store.")
 
-    # Step 2: Connect to remote Chroma client
-    print("Connecting to remote Chroma client...")
-    client = chromadb.HttpClient(
-        Settings(
-            chroma_api_impl="rest",
-            chroma_server_host=chroma_host.replace("https://", "").replace("http://", ""),
-            chroma_server_http_port=443,
-            chroma_server_ssl_enabled=True,
-            anonymized_telemetry=False,
-            chroma_api_key=api_key,
-        )
-    )
+#     # Step 2: Connect to remote Chroma client
+#     print("Connecting to remote Chroma client...")
+#     client = chromadb.HttpClient(
+#         Settings(
+#             chroma_api_impl="rest",
+#             chroma_server_host=chroma_host.replace("https://", "").replace("http://", ""),
+#             chroma_server_http_port=443,
+#             chroma_server_ssl_enabled=True,
+#             anonymized_telemetry=False,
+#             chroma_api_key=api_key,
+#         )
+#     )
 
-    # Step 3: Create or get collection on remote
-    print(f"Creating or retrieving collection '{collection_name}' on remote Chroma...")
-    collection = client.get_or_create_collection(name=collection_name)
+#     # Step 3: Create or get collection on remote
+#     print(f"Creating or retrieving collection '{collection_name}' on remote Chroma...")
+#     collection = client.get_or_create_collection(name=collection_name)
 
-    # Step 4: Upload documents
-    print("Uploading documents to remote collection...")
+#     # Step 4: Upload documents
+#     print("Uploading documents to remote collection...")
 
-    collection.add(
-        documents=local_docs["documents"],
-        embeddings=local_docs["embeddings"],
-        metadatas=local_docs["metadatas"],
-        ids=[f"id-{i}" for i in range(len(local_docs["documents"]))],
-    )
+#     collection.add(
+#         documents=local_docs["documents"],
+#         embeddings=local_docs["embeddings"],
+#         metadatas=local_docs["metadatas"],
+#         ids=[f"id-{i}" for i in range(len(local_docs["documents"]))],
+#     )
 
-    print(f"Uploaded {len(local_docs['documents'])} documents to remote collection '{collection_name}'.")
-    return collection
+#     print(f"Uploaded {len(local_docs['documents'])} documents to remote collection '{collection_name}'.")
+#     return collection
 
 
-#Loading Embeddings from Chroma Store
+# #Loading Embeddings from Chroma Store
 
-def load_chroma_cloud_collection(collection_name, chroma_host, api_key):
-    """
-    Connects to Chroma Cloud and retrieves an existing collection.
+# def load_chroma_cloud_collection(collection_name, chroma_host, api_key):
+#     """
+#     Connects to Chroma Cloud and retrieves an existing collection.
 
-    Args:
-        collection_name (str): The name of the collection to retrieve.
-        chroma_host (str): The Chroma Cloud host URL (e.g., "https://api.trychroma.com").
-        api_key (str): Your Chroma Cloud API key.
+#     Args:
+#         collection_name (str): The name of the collection to retrieve.
+#         chroma_host (str): The Chroma Cloud host URL (e.g., "https://api.trychroma.com").
+#         api_key (str): Your Chroma Cloud API key.
 
-    Returns:
-        chromadb.api.models.Collection.Collection: The retrieved collection object.
-    """
-    # Step 1: Connect to the remote Chroma client
-    client = chromadb.HttpClient(
-        Settings(
-            chroma_api_impl="rest",
-            chroma_server_host=chroma_host.replace("https://", "").replace("http://", ""),
-            chroma_server_http_port=443,
-            chroma_server_ssl_enabled=True,
-            anonymized_telemetry=False,
-            chroma_api_key=api_key,
-        )
-    )
+#     Returns:
+#         chromadb.api.models.Collection.Collection: The retrieved collection object.
+#     """
+#     # Step 1: Connect to the remote Chroma client
+#     client = chromadb.HttpClient(
+#         Settings(
+#             chroma_api_impl="rest",
+#             chroma_server_host=chroma_host.replace("https://", "").replace("http://", ""),
+#             chroma_server_http_port=443,
+#             chroma_server_ssl_enabled=True,
+#             anonymized_telemetry=False,
+#             chroma_api_key=api_key,
+#         )
+#     )
 
-    # Step 2: Try to get the collection
-    try:
-        collection = client.get_collection(name=collection_name)
-        print(f"✅ Successfully retrieved collection: '{collection_name}'")
-        return collection
-    except Exception as e:
-        print(f"❌ Error retrieving collection: {e}")
-        return None
+#     # Step 2: Try to get the collection
+#     try:
+#         collection = client.get_collection(name=collection_name)
+#         print(f"✅ Successfully retrieved collection: '{collection_name}'")
+#         return collection
+#     except Exception as e:
+#         print(f"❌ Error retrieving collection: {e}")
+#         return None
     
 
 
