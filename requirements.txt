@@ -15,9 +15,10 @@ langchain-community
 langchain-huggingface
 huggingface_hub
 sentence-transformers
+opentelemetry-exporter-otlp-proto-grpc==1.22.0
 
 # Vector store & retrieval
-chromadb
+chromadb==0.4.24
 faiss-cpu
 
 # Search tool
@@ -29,3 +30,5 @@ pydantic
 # Optional: For safety if Fireworks LLM or other usage depends on extra inference modules
 requests
 tqdm
+protobuf==3.20.3
+
