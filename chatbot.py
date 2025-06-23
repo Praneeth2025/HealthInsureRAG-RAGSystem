@@ -38,7 +38,8 @@ from diskcache import Cache
 import os
 
 # Set token directly (less secure)
-
+import os
+os.environ["CHROMA_API_IMPL"] = "local"
 
 
 
