@@ -1,0 +1,5 @@
+build-essential
+python3-dev
+g++
+libopenblas-dev
+libomp-dev
