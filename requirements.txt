@@ -1,8 +1,11 @@
+--upgrade-strategy eager
+numpy==1.24.4
+chromadb==0.4.22
+
 # Core libraries
 streamlit
 python-dotenv
 diskcache
-numpy==1.24.4
 
 # PDF processing
 PyMuPDF  # provides the 'fitz' module
@@ -19,7 +22,7 @@ sentence-transformers
 opentelemetry-exporter-otlp-proto-grpc==1.22.0
 
 # Vector store & retrieval
-chromadb==0.4.15
+
 faiss-cpu
 
 # Search tool
