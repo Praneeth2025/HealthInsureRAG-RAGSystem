@@ -1,0 +1,31 @@
+# Core libraries
+streamlit
+python-dotenv
+diskcache
+
+# PDF processing
+PyMuPDF  # provides the 'fitz' module
+pdfplumber
+
+# LLM and embeddings
+openai
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+huggingface_hub
+sentence-transformers
+
+# Vector store & retrieval
+chromadb
+faiss-cpu
+
+# Search tool
+duckduckgo-search
+
+# Pydantic for data models
+pydantic
+
+# Optional: For safety if Fireworks LLM or other usage depends on extra inference modules
+requests
+tqdm
