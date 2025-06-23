@@ -189,7 +189,6 @@ def build_vectorstore_from_pdf(file_path):
     documents=docs,
     embedding=embedding_model
 )
-    vectorstore = FAISS.load_local("faiss_store", embeddings=embedding_model,allow_dangerous_deserialization=True)
     return vectorstore
 
 
