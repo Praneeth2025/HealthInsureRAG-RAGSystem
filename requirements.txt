@@ -11,7 +11,7 @@ PyMuPDF          # provides the 'fitz' module
 pdfplumber
 
 # === Vector Store & Embedding ===
-faiss-cpu==1.7.4
+faiss-cpu
 chromadb==0.4.22
 sentence-transformers
 
