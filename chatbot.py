@@ -18,10 +18,10 @@ from langchain_community.llms import HuggingFaceHub
 from pydantic import BaseModel
 
 # --- ChromaDB Vector Store ---
-import chromadb
-from chromadb import Client
-from chromadb.config import Settings
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+# import chromadb
+# from chromadb import Client
+# from chromadb.config import Settings
+# from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
 # --- LangChain: LLMs, Retrieval, Compression ---
 from langchain.retrievers.document_compressors import LLMChainExtractor
