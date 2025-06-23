@@ -1,41 +1,36 @@
-numpy==1.24.4
-chromadb==0.4.22
-langchain==0.1.14
-faiss-cpu==1.7.4
+# === Core Libraries ===
 streamlit==1.33.0
-
-
-# Core libraries
-streamlit
 python-dotenv
 diskcache
+tqdm
+requests
 
-# PDF processing
-PyMuPDF  # provides the 'fitz' module
+# === PDF Processing ===
+PyMuPDF          # provides the 'fitz' module
 pdfplumber
 
-# LLM and embeddings
-openai
-langchain
+# === Vector Store & Embedding ===
+faiss-cpu==1.7.4
+chromadb==0.4.22
+sentence-transformers
+
+# === LangChain & LLM Integrations ===
+langchain==0.1.14
 langchain-core
 langchain-community
 langchain-huggingface
 huggingface_hub
-sentence-transformers
-opentelemetry-exporter-otlp-proto-grpc==1.22.0
+openai
 
-# Vector store & retrieval
-
-faiss-cpu
-
-# Search tool
+# === Search Integration ===
 duckduckgo-search
 
-# Pydantic for data models
-pydantic
+# === Monitoring & Telemetry ===
+opentelemetry-exporter-otlp-proto-grpc==1.22.0
 
-# Optional: For safety if Fireworks LLM or other usage depends on extra inference modules
-requests
-tqdm
+# === Data Models ===
+pydantic
 protobuf==3.20.3
 
+# === Compatibility Pinning ===
+numpy==1.24.4
