@@ -1,37 +1,33 @@
-numpy==1.24.4
-# === Core Libraries ===
+# Language models and embeddings
+openai
+huggingface_hub
+sentence-transformers
+langchain==0.1.14
+langchain-community
+langchain-core
+langchain-huggingface
+
+# Vector store
+chromadb==0.4.22
+
+
+
+# PDF processing
+PyMuPDF
+pdfplumber
+
+# Web framework
 streamlit==1.33.0
 python-dotenv
 diskcache
-tqdm
-requests
 
-# === PDF Processing ===
-PyMuPDF          # provides the 'fitz' module
-pdfplumber
-
-# === Vector Store & Embedding ===
-
-chromadb==0.4.22
-sentence-transformers
-
-# === LangChain & LLM Integrations ===
-langchain==0.1.14
-langchain-core
-langchain-community
-langchain-huggingface
-huggingface_hub
-openai
-
-# === Search Integration ===
+# Other tools
 duckduckgo-search
-
-# === Monitoring & Telemetry ===
-opentelemetry-exporter-otlp-proto-grpc==1.22.0
-
-# === Data Models ===
 pydantic
-protobuf==3.20.3
+requests
+tqdm
 
-# === Compatibility Pinning ===
+# Pin known compatible versions
 numpy==1.24.4
+protobuf==3.20.3
+opentelemetry-exporter-otlp-proto-grpc==1.22.0
