@@ -18,7 +18,7 @@ from langchain_community.llms import HuggingFaceHub
 from pydantic import BaseModel
 
 # --- ChromaDB Vector Store ---
-# import chromadb
+import chromadb
 # from chromadb import Client
 # from chromadb.config import Settings
 # from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
@@ -39,7 +39,7 @@ import os
 
 # Set token directly (less secure)
 import os
-os.environ["CHROMA_API_IMPL"] = "local"
+os.environ["CHROMA_API_IMPL"] = "chromadb.api.local.LocalAPI"
 
 
 
