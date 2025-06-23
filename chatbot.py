@@ -2,7 +2,7 @@
 import fitz  # from PyMuPDF
 import pdfplumber
 import re
-
+import numpy
 import os
 from huggingface_hub import InferenceClient
 # --- LangChain: Document Loading, Splitting, Embedding ---
