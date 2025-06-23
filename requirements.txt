@@ -28,6 +28,6 @@ requests
 tqdm
 
 # Pin known compatible versions
-numpy==1.24.4
+numpy
 protobuf==3.20.3
 opentelemetry-exporter-otlp-proto-grpc==1.22.0
