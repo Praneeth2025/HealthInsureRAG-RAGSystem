@@ -19,7 +19,7 @@ sentence-transformers
 opentelemetry-exporter-otlp-proto-grpc==1.22.0
 
 # Vector store & retrieval
-chromadb==0.4.24
+chromadb==0.4.15
 faiss-cpu
 
 # Search tool
