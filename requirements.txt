@@ -1,6 +1,10 @@
---upgrade-strategy eager
 numpy==1.24.4
 chromadb==0.4.22
+pdfminer.six==20221105
+langchain==0.1.14
+faiss-cpu==1.7.4
+streamlit==1.33.0
+
 
 # Core libraries
 streamlit
