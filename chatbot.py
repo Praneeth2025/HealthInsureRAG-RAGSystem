@@ -1,3 +1,7 @@
+import sys
+import pysqlite3
+sys.modules['sqlite3'] = pysqlite3
+
 # --- PDF & Text Handling ---
 import fitz  # from PyMuPDF
 import pdfplumber
