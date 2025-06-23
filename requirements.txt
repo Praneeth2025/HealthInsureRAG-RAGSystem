@@ -11,6 +11,7 @@ langchain-huggingface
 chromadb[local]
 pysqlite3-binary
 pypdf
+faiss-cpu
 
 
 # PDF processing
