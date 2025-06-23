@@ -8,6 +8,8 @@ import pdfplumber
 import re
 import numpy as np
 import os
+from langchain_community.vectorstores import FAISS
+
 from huggingface_hub import InferenceClient
 # --- LangChain: Document Loading, Splitting, Embedding ---
 from langchain_community.document_loaders import PyPDFLoader
@@ -183,12 +185,11 @@ def build_vectorstore_from_pdf(file_path):
     )
 
     # Step 6: Create and return Chroma vector store
-    vectorstore = Chroma.from_documents(
-        documents=docs,
-        embedding=embedding_model,
-        collection_name="My_Data_Chunk",
-        persist_directory="chroma_store"
-    )
+    vectorstore = FAISS.from_documents(
+    documents=docs,
+    embedding=embedding_model
+)
+    vectorstore = FAISS.load_local("faiss_store", embedding=embedding_model)
     return vectorstore
 
 
