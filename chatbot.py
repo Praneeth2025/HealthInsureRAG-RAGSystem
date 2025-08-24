@@ -7,6 +7,7 @@ import fitz  # from PyMuPDF
 import pdfplumber
 import re
 import numpy as np
+from collections import deque
 import os
 from langchain_community.vectorstores import FAISS
 
@@ -381,20 +382,15 @@ def document_search_tool(query,vector_store):
 
 
  #Main Code:
-
-
+# Global history (stores tuples of (query, answer))
+conversation_history = deque(maxlen=3)
 
 def generate_insurance_answer(query: str, vector_store) -> str:
     """
-    Combines document and internet search results to generate a response using LLaMA 3.1.
-
-    Args:
-        query (str): The user's question.
-        vector_store: The internal document vector store.
-
-    Returns:
-        str: The model's response based on the combined context.
+    Combines document and internet search results to generate a response using LLaMA 3.1,
+    while keeping track of the last 3 prompts and answers.
     """
+
     # Step 1: Internal document search
     doc_result = document_search_tool(query, vector_store)
     print("Document result:", doc_result)
@@ -403,11 +399,20 @@ def generate_insurance_answer(query: str, vector_store) -> str:
     internet_result = internet_search_tool(query)
     print("Internet result:", internet_result)
 
-    # Step 3: Combine context
+    # Step 3: Build conversation history text
+    history_text = ""
+    if conversation_history:
+        history_text = "Here are the last few interactions for context:\n"
+        for i, (q, a) in enumerate(conversation_history, 1):
+            history_text += f"\n{i}. Question: {q}\n   Answer: {a}\n"
+
+    # Step 4: Combine context
     combined_context = f"""
 You are an expert in insurance. A user has asked the following question:
 
 Question: "{query}"
+
+{history_text}
 
 Here is what we found in internal documents:
 {doc_result}
@@ -420,18 +425,23 @@ Do consider the internal document as the main source of information unless the q
 Based on both sources, provide a helpful and comprehensive answer.
 """
 
-    # Step 4: Initialize client (e.g. Fireworks.ai)
+    # Step 5: Initialize client
     api_key = os.environ.get("HF_TOKEN")
     client = InferenceClient(
         provider="fireworks-ai",
         api_key=api_key
     )
 
-    # Step 5: Call the model
+    # Step 6: Call the model
     completion = client.chat.completions.create(
         model="meta-llama/Llama-3.1-8B-Instruct",
         messages=[{"role": "user", "content": combined_context}]
     )
 
-    # Step 6: Return result
-    return completion.choices[0].message.content
+    # Step 7: Extract result
+    answer = completion.choices[0].message.content
+
+    # Step 8: Save to history
+    conversation_history.append((query, answer))
+
+    return answer
