@@ -380,9 +380,9 @@ def document_search_tool(query,vector_store):
 
 
 
-# Main Code:
+ #Main Code:
 
-chat_history = []
+
 
 def generate_insurance_answer(query: str, vector_store) -> str:
     """
@@ -395,51 +395,43 @@ def generate_insurance_answer(query: str, vector_store) -> str:
     Returns:
         str: The model's response based on the combined context.
     """
-       global chat_history
-
-    # Step 1 and 2: Search document and internet as before
+    # Step 1: Internal document search
     doc_result = document_search_tool(query, vector_store)
-    internet_result = internet_search_tool(query)
+    print("Document result:", doc_result)
 
+    # Step 2: Internet search
+    internet_result = internet_search_tool(query)
+    print("Internet result:", internet_result)
+
+    # Step 3: Combine context
     combined_context = f"""
-You are an expert in insurance. Use previous conversation context when available.
+You are an expert in insurance. A user has asked the following question:
 
 Question: "{query}"
 
-Internal documents:
+Here is what we found in internal documents:
 {doc_result}
 
-Internet results:
+Here is what we found on the internet:
 {internet_result}
 
-Based on these, provide a helpful and comprehensive answer.
+Do consider the internal document as the main source of information unless the question is asking for some kind of definition.
+
+Based on both sources, provide a helpful and comprehensive answer.
 """
 
-    # Compose messages including last 2 conversation pairs plus current user query prompt
-    messages = []
-
-    # Add previous messages if available (limit 4 messages = last 2 pairs)
-    if chat_history:
-        messages.extend(chat_history[-4:])
-    
-    # Add current user prompt
-    messages.append({"role": "user", "content": combined_context})
-
-    # API call as before
+    # Step 4: Initialize client (e.g. Fireworks.ai)
     api_key = os.environ.get("HF_TOKEN")
-    client = InferenceClient(provider="fireworks-ai", api_key=api_key)
+    client = InferenceClient(
+        provider="fireworks-ai",
+        api_key=api_key
+    )
+
+    # Step 5: Call the model
     completion = client.chat.completions.create(
         model="meta-llama/Llama-3.1-8B-Instruct",
-        messages=messages
+        messages=[{"role": "user", "content": combined_context}]
     )
-    answer = completion.choices[0].message.content
 
-    # Update chat history with current turn
-    chat_history.append({"role": "user", "content": combined_context})
-    chat_history.append({"role": "assistant", "content": answer})
-
-    # Optional: trim history to last 4 messages if it grows beyond
-    if len(chat_history) > 8:
-        chat_history = chat_history[-8:]
-
-    return answer
+    # Step 6: Return result
+    return completion.choices[0].message.content
